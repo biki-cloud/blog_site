@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>puppycompany</title>
+
     <!-- CSS only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -18,17 +19,24 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 </head>
+
+
 <body>
     <ul class="nav">
         <li class="nav-link">
+            <!--coreブループリントのindex関数-->
             <a href="{{url_for('core.index')}}">Home</a>
         </li>
         <li class="nav-link">
+            <!--coreブループリントのinfo関数-->
             <a href="{{url_for('core.info')}}">About</a>
         </li>
+
         <!--ユーザーがログインしている場合-->
+        <!--current_userはlogin_managerの属性-->
         {% if current_user.is_authenticated %}
         <li class="nav-link">
+            <!--usersブループリントのlogout関数-->
             <a href="{{url_for('users.logout')}}">Log Out</a>
         </li>
         <li class="nav-link">
@@ -38,6 +46,7 @@
             <a href="{{url_for('blog_posts.create_post')}}">Create Post</a>
         </li>
 
+        <!--ユーザーがログインしていない場合-->
         {% else %}
         <li class="nav-link">
             <a href="{{url_for('users.login')}}">Log In</a>

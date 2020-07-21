@@ -2,8 +2,10 @@ import os
 from PIL import Image
 from flask import url_for , current_app
 
+# pic_uploadは画像オブジェクト
 def add_profile_pic(pic_upload,username):
     filename = pic_upload.filename
+    
     # get 拡張子
     ext_type = filename.split('.')[-1]
     storage_filename = str(username) + '.' + ext_type

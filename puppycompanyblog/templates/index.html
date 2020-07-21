@@ -1,17 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
+    <!--jumbotron は左右に広げて配置する-->
     <div class="jumbotron">
         <h1>Puppy Company Blog</h1>
     </div>
 
+    <!--containerは中身をセンタリングし幅を固定する-->
     <div class="container">
+        <!--blog_postsをフォームから渡している。過去のブログのリスト-->
+        <!--postオブジェクトの属性はmodels.pyのBlogPostクラスに記述している-->
         {% for post in blog_posts.items %}
             <div class="card">
                 <div class="card body">
+                    <!--blog_posts.blog_postはblog_postsBlueprintのblog_post関数-->
+                    <!--__init__.pyでBlueprintをappに結びつけることでリンクしている-->
+                    <!--blog_post_id=post.idはblog_post関数の引数-->
+                    <!--post.author.usernameはpostを作成したもの、modles.pyのUserクラスに記述している-->
                     <h2> <a class="card-title" href="{{url_for('blog_posts.blog_post',blog_post_id=post.id)}}">{{post.title}}</a></h2>
                     <a href="{{url_for('users.user_posts',username=post.author.username)}}">Written by:{{post.author.username}}</a>
                     <p>Published on: {{post.date.strftime("%Y-%m-%d %H:%M:%S")}}</p>
+                    <!--
+                        formで画像取得→pythonで200かけ200にしディレクトリ作成、画像保存、/staticからのパスを返す
+                        <img src="/static/profile_pics/one.png" class="rounded float-left" alt="">
+                    -->
+                    
                     <a class="btn btn-primary" href="{{url_for('blog_posts.blog_post',blog_post_id=post.id)}}">Read Blog Post</a>
+                    
+                    
+                    
                 </div>
             </div>
         
@@ -19,16 +35,19 @@
     </div>
 
 
-    
+    <!--Page Navigation exampleはページのリンクを数字で表す-->
     <nav aria-label='Page Navigation example'>
         <ul class="pagination justify-content-center">
             {% for page_num in blog_posts.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+            <!--現在の参照しているページのリンクならば-->
             {% if blog_posts.page == page_num %}
             <li class="page-item disabled">
+                <!--coreブループリントのindex関数-->
                 <a class="page-link" href="{{url_for('core.index',page=page_num)}}">{{page_num}}</a>
             </li>
             {% else %}
             <li class="page-item">
+                <!--coreブループリントのindex関数-->
                 <a class="page-link" href="{{url_for('core.index',page=page_num)}}">{{page_num}}</a>
             </li>
             {% endif %}

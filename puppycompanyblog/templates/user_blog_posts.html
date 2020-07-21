@@ -4,7 +4,7 @@
         <div class="jumbotron">
             <div align='center'>
                 <h1>welcome to the page for {{user.username}}</h1>
-                <img src="{{url_for('static',filename='profile_pics/'+ user.profile_image)}}?for_cache">
+                <img src="{{url_for('static',filename='profile_pics/'+ user.profile_image)}}?{{epochtime}}">
             </div>
         </div>
     
@@ -14,6 +14,11 @@
         <h2><a href="{{url_for('blog_posts.blog_post',blog_post_id=post.id)}}">{{post.title}}</a></h2>
         Written By: <a href="{{url_for('users.user_posts',username=post.author.username)}}">{{post.author.username}}</a>
         <p class="text-muted">Published on: {{post.date.strftime("%Y-%m-%d %H:%M:%S")}}</p>
+        <br>
+        <!--
+            <img src="/static/profile_pics/one.png" class="rounded float-left" alt="">
+        -->
+        
         <br>
         <p>{{post.text}}</p>
         <br>

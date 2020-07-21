@@ -3,7 +3,7 @@
     <div class="jumbotron">
         <div align="center">
             <h1>welcom to the page for {{current_user.username}}</h1>
-            <img align="center" src="{{url_for('static',filename='profile_pics/' + current_user.profile_image)}}?for_cache">
+            <img align="center" src="{{url_for('static',filename='profile_pics/' + current_user.profile_image)}}?{{epochtime}}">
         </div>
     </div>
 

@@ -4,6 +4,10 @@
         <h1>{{post.title}}</h1>
         <h2>Written by: {{post.author.username}}</h2>
         <h3>Published: {{post.date.strftime("%Y-%m-%d %H:%M:%S")}}</h3>
+        <!--
+            <img src="/static/profile_pics/one.png" class="rounded float-left" alt="">
+        -->
+        
         <p>{{post.text}}</p>
 
         {% if post.author == current_user %}

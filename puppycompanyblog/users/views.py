@@ -4,6 +4,7 @@ from puppycompanyblog import db
 from puppycompanyblog.models import User , BlogPost
 from puppycompanyblog.users.forms import RegistrationForm , LoginForm , UpdateUserForm
 from puppycompanyblog.users.picture_handler import add_profile_pic
+from datetime import datetime
 
 users = Blueprint('users', __name__)
 
@@ -34,6 +35,7 @@ def login():
         # フィルターをかけて検索して最初に見つかったものを返す
         user = User.query.filter_by(email=form.email.data).first()
         
+        # userがあるか、パスワードが合っているか
         if user is not None and user.check_password(form.password.data):
             login_user(user)
             flash('Log in Success!')
@@ -48,13 +50,15 @@ def login():
         
 
 # Logout
+# url_for('users/logout')
 @users.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for("core.index"))
 
+# url_for('users.account')かhtmlからは{{url_for('users.account')}}でここへ飛ぶことができる
 @users.route('/account',methods=['GET','POST'])
-# ログインしてないと入れない
+# 認証したいページに @ login_required デコレートする
 @login_required
 def account():
     form = UpdateUserForm()
@@ -74,10 +78,14 @@ def account():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-        
-    profile_image = url_for('static',filename='profile_pics/' + current_user.profile_image)
-    return render_template('account.html',profile_image=profile_image,form=form)
+    
+    now = datetime.now()
+    epochtime = str(now.timestamp())
+    profile_image = url_for('static', filename='profile_pics/' +
+                            current_user.profile_image)+"?"+epochtime
+    return render_template('account.html',profile_image=profile_image,form=form,epochtime=epochtime)
 
+# url_for('/<username>')
 @users.route('/<username>')
 def user_posts(username):
     page = request.args.get('page',1,type=int)
@@ -85,4 +93,6 @@ def user_posts(username):
     user = User.query.filter_by(username=username).first_or_404()
     # 今まで投稿したブログを表示する
     blog_posts = BlogPost.query.filter_by(author=user).order_by(BlogPost.date.desc()).paginate(page=page,per_page=5)
-    return render_template('user_blog_posts.html',blog_posts=blog_posts,user=user)
+    now = datetime.now()
+    epochtime = str(now.timestamp())
+    return render_template('user_blog_posts.html', blog_posts=blog_posts, user=user, epochtime=epochtime)

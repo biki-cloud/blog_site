@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from datetime import datetime
 import pytz
 
+# ログインが必要なページに記述する
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
@@ -39,6 +40,7 @@ class BlogPost(db.Model):
     date = db.Column(db.DateTime, nullable=False, default=datetime.now(pytz.timezone('Asia/Tokyo')))
     title = db.Column(db.String(140), nullable=False)
     text = db.Column(db.Text,nullable=False)
+    # profile_image = db.Column(db.String(64), nullable=False,default='default_profile.png')
     
     def __init__(self, title , text , user_id):
         self.title = title
