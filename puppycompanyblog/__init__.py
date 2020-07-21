@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 
 # このappをapp.pyがインポートして使用する
+# app.pyは実行するだけでappの設定は全てこのファイルで行う
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'mysecret'
