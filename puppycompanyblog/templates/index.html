@@ -2,7 +2,7 @@
 {% block content %}
     <!--jumbotron は左右に広げて配置する-->
     <div class="jumbotron">
-        <h1>Puppy Company Blog</h1>
+        <h1>書き込み投稿サイト</h1>
     </div>
 
     <!--containerは中身をセンタリングし幅を固定する-->
@@ -16,9 +16,9 @@
                     <!--__init__.pyでBlueprintをappに結びつけることでリンクしている-->
                     <!--blog_post_id=post.idはblog_post関数の引数-->
                     <!--post.author.usernameはpostを作成したもの、modles.pyのUserクラスに記述している-->
-                    <h2> <a class="card-title" href="{{url_for('blog_posts.blog_post',blog_post_id=post.id)}}">{{post.title}}</a></h2>
-                    <a href="{{url_for('users.user_posts',username=post.author.username)}}">Written by:{{post.author.username}}</a>
-                    <p>Published on: {{post.date.strftime("%Y-%m-%d %H:%M:%S")}}</p>
+                    <h2> Title: <a class="card-title" href="{{url_for('blog_posts.blog_post',blog_post_id=post.id)}}">{{post.title}}</a></h2>
+                    <h5> Written by: <a href="{{url_for('users.user_posts',username=post.author.username)}}">{{post.author.username}}</a></h5>
+                    <p>  Create time: {{post.date.strftime("%Y-%m-%d %H:%M:%S")}}</p>
                     <!--
                         formで画像取得→pythonで200かけ200にしディレクトリ作成、画像保存、/staticからのパスを返す
                         <img src="/static/profile_pics/one.png" class="rounded float-left" alt="">
