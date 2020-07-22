@@ -20,4 +20,5 @@ RUN flask db migrate
 RUN flask db upgrade
 RUN ls /home
 
-
+# adding follwing command when heroku deployment
+# CMD flask run -h 0.0.0.0 -p $PORT
