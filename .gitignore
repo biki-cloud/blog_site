@@ -2,3 +2,4 @@ migrations
 *.pyc
 *.jpg
 *.png
+*.sqlite
